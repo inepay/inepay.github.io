@@ -1,0 +1,34 @@
+name: GitHub Pages
+
+on:
+  push:
+    branches:
+      - main  # Change this to your repository's main branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: 14  # Adjust the Node.js version as needed
+
+    - name: Build and Deploy
+      run: |
+        npm install  # If you're using a build tool like npm
+        npm run build  # If your project requires a build step
+
+        mkdir public
+        cp -r dist/* public
+
+    - name: Deploy to GitHub Pages
+      uses: JamesIves/github-pages-deploy-action@4.1.4
+      with:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        BRANCH: gh-pages
+        FOLDER: public
+ 	
