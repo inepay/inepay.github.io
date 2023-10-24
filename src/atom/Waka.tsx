@@ -2,7 +2,7 @@ import React from 'react';
 
 function Waka() {
   return (
-    <h1>Hey jude</h1>
+    <h1>Hey jude2</h1>
   );
 }
 
