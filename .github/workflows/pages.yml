@@ -22,13 +22,13 @@ jobs:
         npm install  # If you're using a build tool like npm
         npm run build  # If your project requires a build step
 
-        # mkdir public
-        # cp -r docs/* public
+        mkdir public
+        cp -r build/* public
 
     - name: Deploy to GitHub Pages
       uses: JamesIves/github-pages-deploy-action@4.1.4
       with:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         BRANCH: gh-pages
-        FOLDER: build
+        FOLDER: public
  	
