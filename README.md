@@ -44,3 +44,37 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+To create a `GH_TOKEN` (GitHub Token) for use in your GitHub Actions workflow, you can follow these steps:
+
+1. **Generate a Personal Access Token (PAT):**
+   - Go to your GitHub account settings.
+   - Navigate to "Developer settings" > "Personal access tokens."
+   - Click on "Generate token."
+   - Provide a name for your token, select the required scopes (at least `repo` and `workflow`), and generate the token.
+   - Copy the generated token.
+
+2. **Add the Token to GitHub Repository Secrets:**
+   - Go to your GitHub repository.
+   - Navigate to "Settings" > "Secrets" > "New repository secret."
+   - Name the secret `GH_TOKEN` (or any name you prefer) and paste the token you copied.
+   - Click on "Add secret."
+
+3. **Update Your GitHub Actions Workflow:**
+   - In your workflow file, make sure you are using the correct secret.
+   - Replace `secrets.GH_TOKEN` with the name of the secret you created (e.g., `secrets.YOUR_SECRET_NAME`).
+
+Here's the modified section of your workflow file:
+
+```yaml
+- name: Deploy to GitHub Pages
+  uses: JamesIves/github-pages-deploy-action@4.1.4
+  with:
+    GITHUB_TOKEN: ${{ secrets.YOUR_SECRET_NAME }}
+    BRANCH: gh-pages
+    FOLDER: build\
+```
+
+Remember to adjust the `YOUR_SECRET_NAME` placeholder with the actual name you used for your secret.
+
+This way, you're securely storing your token as a secret and using it in your GitHub Actions workflow. This is important for security reasons, as exposing tokens in your workflow files can lead to unauthorized access.
