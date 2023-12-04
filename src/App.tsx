@@ -1,7 +1,7 @@
 import React from 'react';
 import Waka from '../src/atom/Waka'
 import logo from './logo.svg';
-import './App.css';
+import './App.scss';
 
 function App() {
   return (
