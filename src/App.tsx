@@ -1,12 +1,13 @@
 import React from 'react';
 import Waka from '../src/atom/Waka'
+import MainPage from './poc/MainPage'
 import logo from './logo.svg';
 import './App.scss';
 
 function App() {
   return (
     <div className="App">
-      <Waka/>
+      <MainPage/>
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
