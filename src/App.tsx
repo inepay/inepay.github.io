@@ -7,6 +7,7 @@ import './App.scss';
 function App() {
   return (
     <div className="App">
+      <Waka/>
       <MainPage/>
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
