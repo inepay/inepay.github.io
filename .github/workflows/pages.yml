@@ -23,8 +23,13 @@ jobs:
         npm run build  # If your project requires a build step
         echo 'hey jude'
     - name: Deploy to GitHub Pages
-      uses: JamesIves/github-pages-deploy-action@4.1.4
-      with:
-        token: ${{ secrets.GH_TOKEN }}
-        BRANCH: gh-pages
-        FOLDER: build
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          personal_token: ${{ secrets.GH_TOKEN }}
+          publish_dir: ./build  # Deploy only the contents of the 'build' directory
+    # - name: Deploy to GitHub Pages
+    #   uses: JamesIves/github-pages-deploy-action@4.1.4
+    #   with:
+    #     token: ${{ secrets.GH_TOKEN }}
+    #     BRANCH: gh-pages
+    #     FOLDER: build
