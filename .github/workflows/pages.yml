@@ -9,22 +9,22 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
+    - name: Checkout Repository
+      uses: actions/checkout@v2
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '16'  # Adjust the Node.js version as needed
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: 18.0.1  # Adjust the Node.js version as needed
 
-      - name: Build and Deploy
-        run: |
-          npm install  # If you're using a build tool like npm
-          npm run build  # If your project requires a build step
-          echo 'hey jude'
-      - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@4.1.4
-        with:
-          token: ${{ secrets.GH_TOKEN }}
-          BRANCH: gh-pages
-          FOLDER: build
+    - name: Build and Deploy
+      run: |
+        npm install  # If you're using a build tool like npm
+        npm run build  # If your project requires a build step
+        echo 'hey jude'
+    - name: Deploy to GitHub Pages
+      uses: JamesIves/github-pages-deploy-action@4.1.4
+      with:
+        GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+        BRANCH: gh-pages
+        FOLDER: build
