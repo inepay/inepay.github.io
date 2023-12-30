@@ -22,7 +22,6 @@ jobs:
           npm install  # If you're using a build tool like npm
           npm run build  # If your project requires a build step
           echo 'hey jude'
-
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@4.1.4
         with:
