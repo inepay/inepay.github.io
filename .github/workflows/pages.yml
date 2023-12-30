@@ -27,6 +27,7 @@ jobs:
       with:
         personal_token: ${{ secrets.GH_TOKEN }}
         publish_dir: ./build  # Deploy only the contents of the 'build' directory
+        node-version: '16'
     # - name: Deploy to GitHub Pages
     #   uses: JamesIves/github-pages-deploy-action@4.1.4
     #   with:
