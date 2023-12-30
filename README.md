@@ -1,4 +1,4 @@
-# purpose
+# purpose 2
 I have an android application which opens a webview and serves my site on the mobile. Idea is i want to create an application which opens rear camera and makes use of autmented reality to detect car seats. user should be able to select car seat covers from a predefined list of covers and apply them at runtime. So users can now see how the car looks like with the new covers in an augmented reality. Lets take this step by step. We also have to make sure of performance and stuff. 
 # Getting Started with Create React App
 
