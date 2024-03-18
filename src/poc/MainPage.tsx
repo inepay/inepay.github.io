@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import DetectButton from './DetectButton';
 import CaptureButton from './CaptureButton';
 
@@ -18,21 +18,28 @@ const MainPage: React.FC = () => {
     console.log('Navigate to video capture view');
   };
 
-  const startCamera = () => {
+  const startCamera = useCallback(() => {
+    // alert('hey jude',(window as any)?.NativeInterface)
+    if(!navigator?.mediaDevices?.getUserMedia){
+      alert(' cannot show vide because your webview version is ...' + ((window as any)?.NativeInterface?.getWebviewVersion()));
+      return;
+    }
+    
     navigator.mediaDevices.getUserMedia({ video: true })
       .then(function(newStream) {
         setStream(newStream);
-        if (videoRef.current) {
-          videoRef.current.srcObject = newStream;
-          setIsVideoOn(true);
-        }
-        console.log('Camera started');
+        setIsVideoOn(true);
       })
       .catch(function(error) {
         // Handle error
         console.error('Error starting camera:', error);
       });
-  };
+  },[])
+
+  useEffect(()=>{
+    if (!stream || !videoRef.current) return;
+    videoRef.current.srcObject = stream;
+  },[videoRef,stream])
 
   const stopCamera = () => {
     if (stream) {
@@ -41,7 +48,6 @@ const MainPage: React.FC = () => {
       });
       setStream(null);
       setIsVideoOn(false);
-      console.log('Camera stopped');
     }
   };
 
