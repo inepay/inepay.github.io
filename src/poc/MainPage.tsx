@@ -33,7 +33,7 @@ const MainPage: React.FC = () => {
       .catch(function(error) {
         // Handle error
         console.error('Error starting camera:', error);
-        alert(" error opening camera 2")
+        alert(" error opening camera 2 " + error)
       });
     alert(" After video 3")
   },[])
