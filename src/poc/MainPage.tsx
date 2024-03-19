@@ -24,7 +24,7 @@ const MainPage: React.FC = () => {
       alert(' cannot show vide because your webview version is ...' + ((window as any)?.NativeInterface?.getWebviewVersion()));
       return;
     }
-    
+    alert(" Before video 1" + navigator?.mediaDevices?.getUserMedia)
     navigator.mediaDevices.getUserMedia({ video: true })
       .then(function(newStream) {
         setStream(newStream);
@@ -34,6 +34,7 @@ const MainPage: React.FC = () => {
         // Handle error
         console.error('Error starting camera:', error);
       });
+    alert(" After video 2")
   },[])
 
   useEffect(()=>{
