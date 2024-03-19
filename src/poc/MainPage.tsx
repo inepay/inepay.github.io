@@ -33,8 +33,9 @@ const MainPage: React.FC = () => {
       .catch(function(error) {
         // Handle error
         console.error('Error starting camera:', error);
+        alert(" error opening camera 2")
       });
-    alert(" After video 2")
+    alert(" After video 3")
   },[])
 
   useEffect(()=>{
