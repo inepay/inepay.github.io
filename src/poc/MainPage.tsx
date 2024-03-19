@@ -19,12 +19,10 @@ const MainPage: React.FC = () => {
   };
 
   const startCamera = useCallback(() => {
-    // alert('hey jude',(window as any)?.NativeInterface)
-    if(!navigator?.mediaDevices?.getUserMedia){
-      alert(' cannot show vide because your webview version is ...' + ((window as any)?.NativeInterface?.getWebviewVersion()));
+    if (!navigator?.mediaDevices?.getUserMedia) {
+      alert('Cannot show video because your webview version is ...' + ((window as any)?.NativeInterface?.getWebviewVersion()));
       return;
     }
-    alert(" Before video 1" + navigator?.mediaDevices?.getUserMedia)
     navigator.mediaDevices.getUserMedia({ video: true })
       .then(function(newStream) {
         setStream(newStream);
@@ -33,15 +31,14 @@ const MainPage: React.FC = () => {
       .catch(function(error) {
         // Handle error
         console.error('Error starting camera:', error);
-        alert(" error opening camera 2 " + error)
+        alert("Error opening camera: " + error);
       });
-    alert(" After video 3")
-  },[])
+  }, []);
 
-  useEffect(()=>{
+  useEffect(() => {
     if (!stream || !videoRef.current) return;
     videoRef.current.srcObject = stream;
-  },[videoRef,stream])
+  }, [videoRef, stream]);
 
   const stopCamera = () => {
     if (stream) {
@@ -59,6 +56,14 @@ const MainPage: React.FC = () => {
     startCamera();
   };
 
+  const handleFileInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files && event.target.files[0];
+    if (file) {
+      // Handle the selected file here
+      console.log('Selected file:', file);
+    }
+  };
+
   return (
     <div>
       {/* Your main content here */}
@@ -71,7 +76,12 @@ const MainPage: React.FC = () => {
           <button onClick={toggleCamera}>Toggle Camera</button>
         </div>
       )}
-      {!isVideoOn && <button onClick={startCamera}>Start Camera</button>}
+      {!isVideoOn && (
+        <div>
+          <button onClick={startCamera}>Start Camera</button>
+          <input type="file" accept="image/*" onChange={handleFileInputChange} />
+        </div>
+      )}
     </div>
   );
 };
