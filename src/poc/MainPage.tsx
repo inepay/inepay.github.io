@@ -44,11 +44,13 @@ const MainPage: React.FC = () => {
         <div>
           <button className="close" onClick={()=>setIsVideoOn(false)}>Stop Camera</button>
           <button className="close" onClick={()=>showFrontCamera(!frontCamera)}>Toggle camera</button>
-          <Webcam
-          ref={webcamRef}
-          videoConstraints={videoConstraints}
-          className="video"
-        />
+            <div className="wrapper">
+              <Webcam
+                ref={webcamRef}
+                videoConstraints={videoConstraints}
+                className="wrapper__video"
+              />
+            </div>
         </div>
       )}
     </div>
