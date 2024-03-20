@@ -65,10 +65,6 @@ const detect = async (net: facemesh.FaceMesh) => {
   }
 };
 
-useEffect(() => {
-  runFacemesh();
-}, []);
-
   const handleDetectButtonClick = () => {
     // Handle navigation to the view for detecting car seats
     console.log('Navigate to car seat detection view');
@@ -84,16 +80,17 @@ useEffect(() => {
       alert('Cannot show video because your webview version is ...' + ((window as any)?.NativeInterface?.getWebviewVersion()));
       return;
     }
-    navigator.mediaDevices.getUserMedia({ video: true })
-      .then(function(newStream) {
-        setStream(newStream);
-        setIsVideoOn(true);
-      })
-      .catch(function(error) {
-        // Handle error
-        console.error('Error starting camera:', error);
-        alert("Error opening camera: " + error);
-      });
+    runFacemesh();
+    // navigator.mediaDevices.getUserMedia({ video: true })
+    //   .then(function(newStream) {
+    //     setStream(newStream);
+    //     setIsVideoOn(true);
+    //   })
+    //   .catch(function(error) {
+    //     // Handle error
+    //     console.error('Error starting camera:', error);
+    //     alert("Error opening camera: " + error);
+    //   });
   }, []);
 
   useEffect(() => {
@@ -117,13 +114,13 @@ useEffect(() => {
     startCamera();
   };
 
-  const handleFileInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files && event.target.files[0];
-    if (file) {
-      // Handle the selected file here
-      console.log('Selected file:', file);
-    }
-  };
+  // const handleFileInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   const file = event.target.files && event.target.files[0];
+  //   if (file) {
+  //     // Handle the selected file here
+  //     console.log('Selected file:', file);
+  //   }
+  // };
 
   return (
     <div>
