@@ -1,10 +1,11 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import DetectButton from './DetectButton';
-import CaptureButton from './CaptureButton';
+import React, { useRef, useState } from 'react';
+
 import * as tf from '@tensorflow/tfjs'
-import * as facemesh from '@tensorflow-models/facemesh'
+//import * as facemesh from '@tensorflow-models/facemesh'
 import Webcam from 'react-webcam';
-import { drawMesh } from "../utils/triangulation";
+//import { drawMesh } from "../utils/triangulation";
+// import DetectButton from './DetectButton';
+// import CaptureButton from './CaptureButton';
 import './style.scss'
 
 async function main() {
