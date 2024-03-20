@@ -91,7 +91,7 @@ const detect = async (net: facemesh.FaceMesh) => {
     //     console.error('Error starting camera:', error);
     //     alert("Error opening camera: " + error);
     //   });
-  }, []);
+  }, [runFacemesh]);
 
   useEffect(() => {
     if (!stream || !videoRef.current) return;
