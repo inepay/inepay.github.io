@@ -2,8 +2,9 @@
     padding:5px;
 }
 
-/*.video{
-    position: 'absolute',
+.video{
+    transform: translateX(-1);
+/*    position: 'absolute',
     marginLeft: 'auto',
     marginRight: 'auto',
     left: 0,
@@ -11,5 +12,5 @@
     textAlign: 'center',
     zIndex: 9,
     width: 640,
-    height: 480,
-}*/
+    height: 480,*/
+}
