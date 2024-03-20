@@ -23,47 +23,6 @@ const MainPage: React.FC = () => {
 
    // Load posenet
 // Load facemesh
-const runFacemesh = async () => {
-  const net = await facemesh.load();
-  setInterval(() => {
-    detect(net);
-  }, 10);
-};
-
-const detect = async (net: facemesh.FaceMesh) => {
-  if (
-    webcamRef.current &&
-    webcamRef.current.video &&
-    webcamRef.current.video.readyState === 4
-  ) {
-    // Get Video Properties
-    const video = webcamRef.current.video!;
-    const videoWidth = video.videoWidth;
-    const videoHeight = video.videoHeight;
-
-    // Set video width
-    video.width = videoWidth;
-    video.height = videoHeight;
-
-    // Set canvas width
-    if (canvasRef.current) {
-      canvasRef.current.width = videoWidth;
-      canvasRef.current.height = videoHeight;
-    }
-
-    // Make Detections
-    const face = await net.estimateFaces(video);
-    //console.log(face);
-
-    // Get canvas context
-    const ctx = canvasRef.current?.getContext('2d');
-    if (ctx) {
-      requestAnimationFrame(() => {
-        drawMesh(face, ctx);
-      });
-    }
-  }
-};
 
   const handleDetectButtonClick = () => {
     // Handle navigation to the view for detecting car seats
@@ -80,6 +39,48 @@ const detect = async (net: facemesh.FaceMesh) => {
       alert('Cannot show video because your webview version is ...' + ((window as any)?.NativeInterface?.getWebviewVersion()));
       return;
     }
+    const runFacemesh = async () => {
+      const net = await facemesh.load();
+      setInterval(() => {
+        detect(net);
+      }, 10);
+    };
+    
+    const detect = async (net: facemesh.FaceMesh) => {
+      if (
+        webcamRef.current &&
+        webcamRef.current.video &&
+        webcamRef.current.video.readyState === 4
+      ) {
+        // Get Video Properties
+        const video = webcamRef.current.video!;
+        const videoWidth = video.videoWidth;
+        const videoHeight = video.videoHeight;
+    
+        // Set video width
+        video.width = videoWidth;
+        video.height = videoHeight;
+    
+        // Set canvas width
+        if (canvasRef.current) {
+          canvasRef.current.width = videoWidth;
+          canvasRef.current.height = videoHeight;
+        }
+    
+        // Make Detections
+        const face = await net.estimateFaces(video);
+        //console.log(face);
+    
+        // Get canvas context
+        const ctx = canvasRef.current?.getContext('2d');
+        if (ctx) {
+          requestAnimationFrame(() => {
+            drawMesh(face, ctx);
+          });
+        }
+      }
+    };
+    
     runFacemesh();
     // navigator.mediaDevices.getUserMedia({ video: true })
     //   .then(function(newStream) {
@@ -91,7 +92,7 @@ const detect = async (net: facemesh.FaceMesh) => {
     //     console.error('Error starting camera:', error);
     //     alert("Error opening camera: " + error);
     //   });
-  }, [runFacemesh]);
+  }, []);
 
   useEffect(() => {
     if (!stream || !videoRef.current) return;
