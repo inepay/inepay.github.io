@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main  # Change this to your repository's main branch
+      - feat/mobile-it
 
 jobs:
   deploy:

@@ -1,75 +1,58 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import DetectButton from './DetectButton';
-import CaptureButton from './CaptureButton';
+import React, { useRef, useState } from 'react';
+
+import * as tf from '@tensorflow/tfjs'
+//import * as facemesh from '@tensorflow-models/facemesh'
+import Webcam from 'react-webcam';
+//import { drawMesh } from "../utils/triangulation";
+// import DetectButton from './DetectButton';
+// import CaptureButton from './CaptureButton';
+import './style.scss'
+
+async function main() {
+  await tf.setBackend('webgl'); // Use WebGL backend
+  // Load your model and perform operations
+}
+
+main();
 
 const MainPage: React.FC = () => {
-  const [stream, setStream] = useState<MediaStream | null>(null);
   const [isVideoOn, setIsVideoOn] = useState(false);
-  const [isFrontCamera, setIsFrontCamera] = useState(true);
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  const handleDetectButtonClick = () => {
-    // Handle navigation to the view for detecting car seats
-    console.log('Navigate to car seat detection view');
-  };
-
-  const handleCaptureButtonClick = () => {
-    // Handle navigation to the view for capturing video to train models
-    console.log('Navigate to video capture view');
-  };
-
-  const startCamera = useCallback(() => {
-    // alert('hey jude',(window as any)?.NativeInterface)
-    if(!navigator?.mediaDevices?.getUserMedia){
-      alert(' cannot show vide because your webview version is ...' + ((window as any)?.NativeInterface?.getWebviewVersion()));
+  const [frontCamera, showFrontCamera] = useState(true);
+  const webcamRef = useRef<Webcam>(null);
+  const startCamera = () => {
+    if (!navigator?.mediaDevices?.getUserMedia) {
+      alert('Cannot show video because your webview version is ...' + ((window as any)?.NativeInterface?.getWebviewVersion()));
       return;
     }
-    
-    navigator.mediaDevices.getUserMedia({ video: true })
-      .then(function(newStream) {
-        setStream(newStream);
-        setIsVideoOn(true);
-      })
-      .catch(function(error) {
-        // Handle error
-        console.error('Error starting camera:', error);
-      });
-  },[])
-
-  useEffect(()=>{
-    if (!stream || !videoRef.current) return;
-    videoRef.current.srcObject = stream;
-  },[videoRef,stream])
-
-  const stopCamera = () => {
-    if (stream) {
-      stream.getTracks().forEach(track => {
-        track.stop();
-      });
-      setStream(null);
-      setIsVideoOn(false);
-    }
+    setIsVideoOn(true)
+  }
+  const videoConstraints = {
+    width: 1280,
+    height: 720,
+    facingMode: frontCamera?"user":{ exact: "environment" }
   };
 
-  const toggleCamera = () => {
-    setIsFrontCamera(!isFrontCamera);
-    stopCamera();
-    startCamera();
-  };
-
+  
   return (
     <div>
-      {/* Your main content here */}
-      <DetectButton onClick={handleDetectButtonClick} />
-      <CaptureButton onClick={handleCaptureButtonClick} />
-      {isVideoOn && (
+      {!isVideoOn && (
         <div>
-          <video ref={videoRef} width="100%" height="auto" autoPlay />
-          <button onClick={stopCamera}>Stop Camera</button>
-          <button onClick={toggleCamera}>Toggle Camera</button>
+          <button onClick={()=>startCamera()}>Start Camera</button>
         </div>
       )}
-      {!isVideoOn && <button onClick={startCamera}>Start Camera</button>}
+      {isVideoOn && (
+        <div>
+          <button className="close" onClick={()=>setIsVideoOn(false)}>Stop Camera</button>
+          <button className="close" onClick={()=>showFrontCamera(!frontCamera)}>Toggle camera</button>
+            <div className="wrapper">
+              <Webcam
+                ref={webcamRef}
+                videoConstraints={videoConstraints}
+                className="wrapper__video"
+              />
+            </div>
+        </div>
+      )}
     </div>
   );
 };
