@@ -1,4 +1,3 @@
-// FaceDetector.tsx
 import React, { useRef, useCallback, useEffect } from 'react';
 import { drawMesh } from '../utils/triangulation'; // Import drawMesh function
 
@@ -53,15 +52,17 @@ const FaceDetector: React.FC<FaceDetectorProps> = ({ model, videoElement, canvas
         videoElement.addEventListener('loadeddata', handleLoadedData);
       }
 
+      const canvas = canvasRef.current;
+
       return () => {
         if (requestRef.current) {
           cancelAnimationFrame(requestRef.current);
           requestRef.current = null;
         }
         videoElement.removeEventListener('loadeddata', handleLoadedData);
-        if (canvasRef.current) {
-          const ctx = canvasRef.current.getContext('2d');
-          ctx?.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height); // Clear canvas when video stops
+        if (canvas) {
+          const ctx = canvas.getContext('2d');
+          ctx?.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas when video stops
         }
       };
     }
