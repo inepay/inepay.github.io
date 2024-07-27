@@ -1,5 +1,5 @@
 // MainPage.tsx
-import React, { useRef, useState, useCallback } from 'react';
+import React, { useRef, useState } from 'react';
 import Webcam from 'react-webcam';
 import { useModel } from './ModelContext'; // Import the useModel hook
 import FaceDetector from './FaceDetector'; // Import the FaceDetector component
