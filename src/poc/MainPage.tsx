@@ -1,56 +1,61 @@
-import React, { useRef, useState } from 'react';
-
-import * as tf from '@tensorflow/tfjs'
-//import * as facemesh from '@tensorflow-models/facemesh'
+// MainPage.tsx
+import React, { useRef, useState, useCallback } from 'react';
 import Webcam from 'react-webcam';
-//import { drawMesh } from "../utils/triangulation";
-// import DetectButton from './DetectButton';
-// import CaptureButton from './CaptureButton';
-import './style.scss'
+import { useModel } from './ModelContext'; // Import the useModel hook
+import FaceDetector from './FaceDetector'; // Import the FaceDetector component
+import './style.scss';
 
-async function main() {
-  await tf.setBackend('webgl'); // Use WebGL backend
-  // Load your model and perform operations
+interface VideoConstraints {
+  width: number;
+  height: number;
+  facingMode: string | { exact: string };
 }
 
-main();
+const videoConstraints = (frontCamera: boolean): VideoConstraints => ({
+  width: 1280,
+  height: 720,
+  facingMode: frontCamera ? 'user' : { exact: 'environment' },
+});
 
 const MainPage: React.FC = () => {
-  const [isVideoOn, setIsVideoOn] = useState(false);
-  const [frontCamera, showFrontCamera] = useState(true);
   const webcamRef = useRef<Webcam>(null);
-  const startCamera = () => {
-    if (!navigator?.mediaDevices?.getUserMedia) {
-      alert('Cannot show video because your webview version is ...' + ((window as any)?.NativeInterface?.getWebviewVersion()));
-      return;
-    }
-    setIsVideoOn(true)
-  }
-  const videoConstraints = {
-    width: 1280,
-    height: 720,
-    facingMode: frontCamera?"user":{ exact: "environment" }
-  };
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [isVideoOn, setIsVideoOn] = useState(false);
+  const [frontCamera, setFrontCamera] = useState(true);
+  const model = useModel(); // Access the model from the context
 
-  
+  const startCamera = () => setIsVideoOn(true);
+  const stopCamera = () => setIsVideoOn(false);
+
+  // Extract video element from the Webcam ref
+  const getVideoElement = () => webcamRef.current?.video ?? null;
+
   return (
     <div>
-      {!isVideoOn && (
-        <div>
-          <button onClick={()=>startCamera()}>Start Camera</button>
-        </div>
-      )}
+      {!isVideoOn && <button onClick={startCamera}>Start Camera</button>}
       {isVideoOn && (
         <div>
-          <button className="close" onClick={()=>setIsVideoOn(false)}>Stop Camera</button>
-          <button className="close" onClick={()=>showFrontCamera(!frontCamera)}>Toggle camera</button>
-            <div className="wrapper">
-              <Webcam
-                ref={webcamRef}
-                videoConstraints={videoConstraints}
-                className="wrapper__video"
+          <button onClick={stopCamera}>Stop Camera</button>
+          <button onClick={() => setFrontCamera(!frontCamera)}>Toggle Camera</button>
+          <div className="wrapper">
+            <Webcam
+              ref={webcamRef}
+              videoConstraints={videoConstraints(frontCamera)}
+              screenshotFormat="image/jpeg"
+              className="wrapper__video"
+            />
+            <canvas 
+              ref={canvasRef} 
+              style={{ position: 'absolute', top: 0 }}
+              className="wrapper__canvas" />
+            {model && (
+              <FaceDetector
+                model={model}
+                videoElement={getVideoElement()}
+                canvasRef={canvasRef}
               />
-            </div>
+            )}
+          </div>
         </div>
       )}
     </div>
