@@ -11,3 +11,32 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.holistic-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative; /* Needed for absolute positioning of the 3D canvas */
+  width: 640px; /* Match the dimensions to the video/canvas */
+  height: 480px; /* Match the dimensions to the video/canvas */
+  background: black; /* Set a background color if needed */
+}
+
+.input_video {
+  display: none; /* Hide the video element */
+}
+
+.output_canvas {
+  width: 640px;
+  height: 480px;
+  position: relative; /* Needed for absolute positioning of the 3D canvas */
+}
+
+.three-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 640px;
+  height: 480px;
+  pointer-events: none; /* Prevent 3D canvas from capturing mouse events */
+  z-index: 10; /* Ensure the 3D canvas is on top */
+}
