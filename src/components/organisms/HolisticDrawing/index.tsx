@@ -1,13 +1,17 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import * as holistic from '@mediapipe/holistic';
+import { drawConnectors, drawLandmarks } from '@mediapipe/drawing_utils';
 
+/*
+Check alternate solution here https://mediapipe.readthedocs.io/en/latest/solutions/face_mesh.html
+*/
 interface HolisticDrawingProps {
   videoRef: React.RefObject<HTMLVideoElement>;
   canvasRef: React.RefObject<HTMLCanvasElement>;
   subscribe: (callback: (results: holistic.Results) => void) => void;
-  unsubscribe: () => void;
+  unsubscribe: (callback: (results: any) => void) => void;
 }
-
+ 
 const HolisticDrawing: React.FC<HolisticDrawingProps> = ({ videoRef, canvasRef, subscribe, unsubscribe }) => {
   const [hatPosition, setHatPosition] = useState<[number, number, number]>([0, 0, 0]);
   const [hatRotation, setHatRotation] = useState<[number, number, number]>([0, 0, 0]);
@@ -18,7 +22,6 @@ const HolisticDrawing: React.FC<HolisticDrawingProps> = ({ videoRef, canvasRef, 
 
     const canvasCtx = canvasRef.current.getContext('2d');
     if (!canvasCtx) return;
-
     const canvasWidth = canvasRef.current.width;
     const canvasHeight = canvasRef.current.height;
 
@@ -27,6 +30,10 @@ const HolisticDrawing: React.FC<HolisticDrawingProps> = ({ videoRef, canvasRef, 
     canvasCtx.drawImage(results.image, 0, 0, canvasWidth, canvasHeight);
 
     if (results.faceLandmarks) {
+      // ++k;
+      // if(k % 100 === 0) console.log("In HolisticDrawing.tsx",results)
+      drawConnectors(canvasCtx, results.faceLandmarks, holistic.FACEMESH_TESSELATION, { color: '#000', lineWidth: 0.1 });
+      drawLandmarks(canvasCtx, results.faceLandmarks, { color: '#FF0000', lineWidth: 0.2, radius: 0.2 });
       const forehead = results.faceLandmarks[10];
       const hatX = forehead.x * canvasWidth;
       const hatY = forehead.y * canvasHeight;
@@ -54,7 +61,7 @@ const HolisticDrawing: React.FC<HolisticDrawingProps> = ({ videoRef, canvasRef, 
   useEffect(() => {
     subscribe(handleResults);
     return () => {
-      unsubscribe();
+      unsubscribe(handleResults);
     };
   }, [handleResults, subscribe, unsubscribe]);
 
