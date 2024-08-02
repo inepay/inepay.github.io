@@ -26,9 +26,13 @@ function calculateHeadPosition(results: holistic.Results): THREE.Vector3 {
 // }
 
 
-//const path = '/assets/wcliepnqrny8-hat/hat';
-//const path = '/assets/canonical_face_model';
-const path = '/assets/face_model_with_iris';
+//const path = '/assets/wcliepnqrny8-hat/hat'; 
+//const path = 'assets/BaseMesh' // Man
+//const path = '/assets/canonical_face_model'; // Face
+//const path = '/assets/face_model_with_iris'; // Face
+//const path = 'assets/benz/uploads_files_2787791_Mercedes+Benz+GLS+580'; //https://free3d.com/3d-model/mercedes-benz-gls-580-2020-83444.html
+//const path = 'assets/Car_seat1'
+const path = 'assets/car-seat2/16957_car_seat_new'
 
 interface HatModelProps {
   videoRef: React.RefObject<HTMLVideoElement>;
@@ -56,6 +60,27 @@ const HatModel = ({
       const objLoader = new OBJLoader();
       objLoader.setMaterials(materials);
       objLoader.load(`${path}.obj`, (object) => {
+        object.traverse((child) => {
+          if ((child as THREE.Mesh).isMesh) {
+            const mesh = child as THREE.Mesh;
+            console.log("JIO",mesh.name) 
+            // Apply different materials based on the mesh name or other properties
+            if (mesh.name.includes('seat')) {
+              mesh.material = new THREE.MeshStandardMaterial({ color: new THREE.Color(0xff0000) }); // Red
+            } else if (mesh.name.includes('back')) {
+              mesh.material = new THREE.MeshStandardMaterial({ color: new THREE.Color(0x00ff00) }); // Green
+            } else {
+              mesh.material = new THREE.MeshStandardMaterial({ color: new THREE.Color(0x0000ff) }); // Blue
+            }
+          }
+        });
+        // object.traverse((child) => {
+        //   if (child instanceof THREE.Mesh) {
+        //     const mesh = child as THREE.Mesh;
+        //     console.log('Mesh Name:', mesh.name); // Log the name of each mesh
+        //     console.log('Mesh:', mesh); // Log the entire mesh object
+        //   }
+        // });
         hatRef.current.add(object);
       }, undefined, (error) => {
         console.error('An error occurred while loading the model:', error);
