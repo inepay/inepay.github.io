@@ -20,10 +20,11 @@ jobs:
 
     - name: Build and Deploy
       run: |
-        npm cache clean --force
-        rm -rf node_modules
-        rm package-lock.json
-        npm install --legacy-peer-deps # If you're using a build tool like npm
+        #npm cache clean --force
+        #rm -rf node_modules
+        #rm package-lock.json
+        #npm install --legacy-peer-deps # If you're using a build tool like npm
+        npm i
         npm run build  # If your project requires a build step
         echo 'hey jude'
     - name: Deploy to GitHub Pages
