@@ -1,11 +1,15 @@
 {
-  "name": "my-pet-project",
+  "name": "bindiya",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "@craco/craco": "^7.1.0",
-    "@tensorflow-models/facemesh": "^0.0.5",
-    "@tensorflow/tfjs": "^4.17.0",
+    "@mediapipe/camera_utils": "^0.3.1675466862",
+    "@mediapipe/drawing_utils": "^0.3.1675466124",
+    "@mediapipe/face_mesh": "^0.4.1633559619",
+    "@mediapipe/holistic": "^0.5.1675471629",
+    "@react-three/drei": "^9.109.2",
+    "@react-three/fiber": "^8.16.8",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -13,7 +17,7 @@
     "@types/node": "^16.18.59",
     "@types/react": "^18.2.31",
     "@types/react-dom": "^18.2.14",
-    "ar.js": "^2.2.2",
+    "device-detector-js": "^3.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
@@ -21,6 +25,7 @@
     "resolve-url-loader": "^5.0.0",
     "sass": "^1.69.5",
     "styled-components": "^6.1.1",
+    "three": "^0.167.0",
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4"
   },
@@ -47,5 +52,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/three": "^0.167.1"
   }
 }
