@@ -8,6 +8,7 @@
     "@mediapipe/drawing_utils": "^0.3.1675466124",
     "@mediapipe/face_mesh": "^0.4.1633559619",
     "@mediapipe/holistic": "^0.5.1675471629",
+    "@tensorflow-models/facemesh": "^0.0.5",
     "@tensorflow/tfjs": "^4.20.0",
     "@react-three/drei": "^9.109.2",
     "@react-three/fiber": "^8.16.8",
