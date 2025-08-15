@@ -4,6 +4,7 @@ import * as THREE from 'three';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
 import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader';
 import * as holistic from '@mediapipe/holistic';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import faceLandmarkIndices from './faceIndexes'
 
 /*function calculateHeadPosition(results: holistic.Results): THREE.Vector3 {
