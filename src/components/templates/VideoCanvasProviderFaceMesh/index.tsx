@@ -8,6 +8,7 @@ interface VideoCanvasProviderProps {
     canvasRef: React.RefObject<HTMLCanvasElement>;
     subscribe: (callback: (results: any) => void) => void;
     unsubscribe: (callback: (results: any) => void) => void;
+    switchCamera: () => void;
   }) => React.ReactNode;
 }
 
@@ -25,13 +26,8 @@ const VideoCanvasProvider: React.FC<VideoCanvasProviderProps> = ({ children }) =
     enableFaceGeometry: true,
   });
 
-//   modelComplexity: 1,
-//   smoothLandmarks: true,
-//   enableSegmentation: true,
-//   smoothSegmentation: true,
-//   //enableFaceGeometry:true,
-
   const [subscribers, setSubscribers] = useState<((results: any) => void)[]>([]);
+  const [cameraFacingMode, setCameraFacingMode] = useState<'user' | 'environment'>('user');
 
   const subscribe = useCallback((callback: (results: any) => void) => {
     setSubscribers(prev => [...prev, callback]);
@@ -39,6 +35,10 @@ const VideoCanvasProvider: React.FC<VideoCanvasProviderProps> = ({ children }) =
 
   const unsubscribe = useCallback((callback: (results: any) => void) => {
     setSubscribers(prev => prev.filter(sub => sub !== callback));
+  }, []);
+
+  const switchCamera = useCallback(() => {
+    setCameraFacingMode(prevMode => (prevMode === 'user' ? 'environment' : 'user'));
   }, []);
 
   useEffect(() => {
@@ -57,6 +57,7 @@ const VideoCanvasProvider: React.FC<VideoCanvasProviderProps> = ({ children }) =
       },
       width: 640,
       height: 480,
+      facingMode: cameraFacingMode,
     });
 
     camera.start();
@@ -64,9 +65,17 @@ const VideoCanvasProvider: React.FC<VideoCanvasProviderProps> = ({ children }) =
     return () => {
       camera.stop();
     };
-  }, [subscribers, facemeshModel]);
+  }, [subscribers, facemeshModel, cameraFacingMode]);
 
-  return <>{children({ videoRef, canvasRef, subscribe, unsubscribe })}</>;
+  return (
+    <div>
+      <h1>Hey jude</h1>
+      <video ref={videoRef} autoPlay playsInline />
+      <canvas ref={canvasRef} />
+      <button onClick={switchCamera} aria-label="Switch Camera">Switch Camera</button>
+      {children({ videoRef, canvasRef, subscribe, unsubscribe, switchCamera })}
+    </div>
+  );
 };
 
 export default VideoCanvasProvider;
