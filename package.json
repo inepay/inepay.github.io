@@ -8,11 +8,10 @@
     "@mediapipe/drawing_utils": "^0.3.1675466124",
     "@mediapipe/face_mesh": "^0.4.1633559619",
     "@mediapipe/holistic": "^0.5.1675471629",
-    "@tensorflow-models/facemesh": "^0.0.5",
-    "@tensorflow/tfjs": "^4.20.0",
-    "@tensorflow/tfjs-backend-wasm": "^4.20.0",
     "@react-three/drei": "^9.109.2",
     "@react-three/fiber": "^8.16.8",
+    "@tensorflow-models/facemesh": "^0.0.5",
+    "@tensorflow/tfjs": "^4.20.0",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -57,6 +56,9 @@
     ]
   },
   "devDependencies": {
-    "@types/three": "^0.167.1"
+    "@types/three": "^0.167.1",
+    "@typescript-eslint/eslint-plugin": "^8.39.1",
+    "@typescript-eslint/parser": "^8.39.1",
+    "assemblyscript": "^0.28.4"
   }
 }

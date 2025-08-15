@@ -1,12 +1,13 @@
-import React, { useEffect, useRef, useState, useCallback } from 'react';
-import { Canvas, useFrame, useThree } from '@react-three/fiber';
+import React, { useEffect, useRef, useCallback } from 'react';
+import { useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
 import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader';
 import * as holistic from '@mediapipe/holistic';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import faceLandmarkIndices from './faceIndexes'
 
-function calculateHeadPosition(results: holistic.Results): THREE.Vector3 {
+/*function calculateHeadPosition(results: holistic.Results): THREE.Vector3 {
   // Access specific landmarks using indices
   const landmarks = results.faceLandmarks;
   const leftEyeOuterLandmark = landmarks[faceLandmarkIndices.leftEye.leftEyeOuter];
@@ -18,7 +19,7 @@ function calculateHeadPosition(results: holistic.Results): THREE.Vector3 {
   const eyeCenter = leftEyeOuter.add(rightEyeOuter).multiplyScalar(1);
   const headPosition = noseTip.add(eyeCenter).multiplyScalar(1);
   return headPosition;
-}
+}*/
 
 // function calculateHeadRotation(landmarks: FaceLandmarks): THREE.Quaternion {
 //   // ... calculate head rotation based on landmarks

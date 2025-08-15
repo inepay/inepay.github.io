@@ -22,7 +22,7 @@ interface DrawingProps {
   subscribe: (callback: (results: faceMesh.Results) => void) => void;
   unsubscribe: (callback: (results: any) => void) => void;
 }
-let k = 0;
+//let k = 0;
 const Drawing: React.FC<DrawingProps> = ({ videoRef, canvasRef, subscribe, unsubscribe }) => {
 
     const imageRef = useRef<HTMLImageElement | null>(null);
