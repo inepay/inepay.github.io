@@ -27,7 +27,7 @@ root.render(
           <div className="holistic-container">
             <video ref={videoRef} className="input_video" autoPlay muted playsInline></video>
             <canvas ref={canvasRef} className="output_canvas" width={640} height={480}></canvas>
-            <Scene className="three-canvas" style={{ width: '640px', height: '480px', border: '1px solid black' }}>
+            <Scene videoRef={videoRef} className="three-canvas" style={{ width: '640px', height: '480px', border: '1px solid black' }}>
               <HatModel videoRef={videoRef} subscribe={subscribe} unsubscribe={unsubscribe} />
             </Scene>
             <HolisticDrawing videoRef={videoRef} canvasRef={canvasRef} subscribe={subscribe} unsubscribe={unsubscribe} />
