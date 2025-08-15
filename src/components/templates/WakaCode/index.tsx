@@ -2,6 +2,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { initWasm, WasmModule } from './wasmModule';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 interface WasmContextProps {
   wasmModule?: WasmModule; // This matches the context's expected structure
 }
