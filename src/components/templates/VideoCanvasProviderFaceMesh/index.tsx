@@ -64,7 +64,7 @@ const VideoCanvasProvider: React.FC<VideoCanvasProviderProps> = ({ children }) =
     return () => {
       camera.stop();
     };
-  }, [subscribers]);
+  }, [subscribers, facemeshModel]);
 
   return <>{children({ videoRef, canvasRef, subscribe, unsubscribe })}</>;
 };
