@@ -25,7 +25,7 @@ code {
   display: none; /* Hide the video element */
 }
 .output_canvas, .three-canvas, .holistic-container  {
-  transform: scaleX(-1);
+  transform: scaleX(-1) translateX(100%);
 }
 // .output_canvas {
 //   width: 640px;
