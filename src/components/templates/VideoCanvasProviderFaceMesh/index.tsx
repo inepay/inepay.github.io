@@ -28,6 +28,7 @@ const VideoCanvasProvider: React.FC<VideoCanvasProviderProps> = ({ children }) =
 
   const [subscribers, setSubscribers] = useState<((results: any) => void)[]>([]);
   const [cameraFacingMode, setCameraFacingMode] = useState<'user' | 'environment'>('user');
+  const [error, setError] = useState<string | null>(null);
 
   const subscribe = useCallback((callback: (results: any) => void) => {
     setSubscribers(prev => [...prev, callback]);
@@ -50,7 +51,7 @@ const VideoCanvasProvider: React.FC<VideoCanvasProviderProps> = ({ children }) =
 
     facemeshModel.onResults(handleResults);
 
-    // Initialize camera
+    // Initialize camera with error handling
     const camera = new cam.Camera(videoRef.current, {
       onFrame: async () => {
         await facemeshModel.send({ image: videoRef.current! });
@@ -60,7 +61,9 @@ const VideoCanvasProvider: React.FC<VideoCanvasProviderProps> = ({ children }) =
       facingMode: cameraFacingMode,
     });
 
-    camera.start();
+    camera.start().catch(err => {
+      setError('Failed to acquire camera feed: ' + err.message);
+    });
 
     return () => {
       camera.stop();
@@ -70,6 +73,7 @@ const VideoCanvasProvider: React.FC<VideoCanvasProviderProps> = ({ children }) =
   return (
     <div>
       <h1>Hey jude</h1>
+      {error && <p style={{ color: 'red' }}>{error}</p>}
       <video ref={videoRef} autoPlay playsInline />
       <canvas ref={canvasRef} />
       <button onClick={switchCamera} aria-label="Switch Camera">Switch Camera</button>
